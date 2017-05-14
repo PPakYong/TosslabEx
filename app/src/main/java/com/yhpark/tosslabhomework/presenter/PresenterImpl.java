@@ -37,6 +37,12 @@ public class PresenterImpl implements Presenter, Callback {
     private int searchEngine = Constants.ENGINE_NAVER;
     private String keyword = "";
 
+    /**
+     * @param keyword 검색어
+     * @param searchEngine 네이버/다음 택1
+     * @param startImmediately unit test의 경우(false) call를 즉각 실행(execute) 후 response가 도착할 때까지 기다린다. 실제 동작의 경우(true) enqueue()를 통해 callback으로 비동기 처리를 한다.
+     * @return
+     */
     public Call getCall(final String keyword, int searchEngine, boolean startImmediately) {
         Call call = null;
 
@@ -74,14 +80,12 @@ public class PresenterImpl implements Presenter, Callback {
                 call.enqueue(this);
             }
         } else {
-            view.setImageList(null);
+            if (view != null) {
+                view.setImageList(null);
+            }
         }
 
         return call;
-    }
-
-    public void initRetrofit() {
-        initRetrofit(searchEngine);
     }
 
     public Retrofit initRetrofit(int engine) {
@@ -114,25 +118,28 @@ public class PresenterImpl implements Presenter, Callback {
 
     @Override
     public void onResponse(Call call, Response response) {
-
-        switch (searchEngine) {
-            //case Constants.ENGINE_NAVER:
-            default:
-                if (keyword.equals(view.getCurrentKeyword())) {
-                    view.setImageList(getNaverResults(response));
-                }
-                break;
-            case Constants.ENGINE_DAUM:
-                if (keyword.equals(view.getCurrentKeyword())) {
-                    view.setImageList(getDaumResults(response));
-                }
-                break;
+        if (view != null) {
+            switch (searchEngine) {
+                //case Constants.ENGINE_NAVER:
+                default:
+                    if (keyword.equals(view.getCurrentKeyword())) {
+                        view.setImageList(getNaverResults(response));
+                    }
+                    break;
+                case Constants.ENGINE_DAUM:
+                    if (keyword.equals(view.getCurrentKeyword())) {
+                        view.setImageList(getDaumResults(response));
+                    }
+                    break;
+            }
         }
     }
 
     @Override
     public void onFailure(Call call, Throwable t) {
-        view.showError(t.getCause().toString());
+        if (view != null) {
+            view.showError(t.getCause().toString());
+        }
     }
 
 
@@ -163,5 +170,9 @@ public class PresenterImpl implements Presenter, Callback {
         }
 
         return imageUrls;
+    }
+
+    public void release() {
+        view = null;
     }
 }

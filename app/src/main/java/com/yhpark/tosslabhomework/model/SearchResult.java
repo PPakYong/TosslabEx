@@ -5,6 +5,10 @@ package com.yhpark.tosslabhomework.model;
  */
 
 public class SearchResult {
+    private String img_url;
+    private String thumbnail_url;
+    private String title;
+    private String link_url;
 
     public String getImg_url() {
         return img_url;
@@ -37,9 +41,4 @@ public class SearchResult {
     public void setLink_url(String link_url) {
         this.link_url = link_url;
     }
-
-    private String img_url;
-    private String thumbnail_url;
-    private String title;
-    private String link_url;
 }
