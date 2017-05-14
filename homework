@@ -1,0 +1,15 @@
+문항 제시된 검색 API 를 이용하여 이미지 검색을하고 그 결과를 그리드 형태의 레이아웃으로나타내주세요.
+
+수행조건
+    1. 검색엔진
+        * 네이버 이미지검색 API : http://developer.naver.com/wiki/pages/SrchImage
+        * 다음 이미지 검색 API : https://developers.daum.net/services/apis/search/image
+
+    2. 추가 요구 사항 검색엔진의선택은 DropDown UI로 합니다.
+       텍스트 입력의변화를 감지해서 검색할수 있도록 해주세요.
+
+유의사항
+    1. 테스트코드를작성하세요.
+    2 OOP 의 설계 5대원칙에 유의하여작성하세요.
+    3. 오픈소스 라이브러리의사용이가능합니다.
+    4. Android Studio 1.5+, Gradle 기반의 IDE 에서 빌드할수 있도록하세요.
